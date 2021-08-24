@@ -1,5 +1,7 @@
 ## Serverless Contact Form Using AWS Amplify
 
+%[https://www.youtube.com/watch?v=hPeXnEX1EWE]
+
 When building out applications, sending email is a frequently needed feature. In addition, it's likely that the data sent in the email needs to be stored in a database for record keeping, analytics, or additional processing.
 
 AWS provides a range of services that help make setting up an API, database, and email transport quick, and secure. Specifically, [AWS Amplify](https://docs.amplify.aws/) provides a lot of the functionality we'll need out of the box, and [Amazon SES](https://aws.amazon.com/ses/) will send emails on our behalf.
