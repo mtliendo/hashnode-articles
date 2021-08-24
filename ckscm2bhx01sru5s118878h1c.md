@@ -1,7 +1,7 @@
 ## Create a Resume Uploader Using AWS Amplify
 
 
-%[https://www.youtube.com/watch?v=hPeXnEX1EWE]
+
 
 In the first part of this series, we learned how to send emails by creating a contact form. In this post, we'll take things up a notch by also allowing our users to upload attachments.
 
