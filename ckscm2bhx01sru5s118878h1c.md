@@ -1,8 +1,11 @@
 ## Create a Resume Uploader Using AWS Amplify
 
+
+%[https://www.youtube.com/watch?v=hPeXnEX1EWE]
+
 In the first part of this series, we learned how to send emails by creating a contact form. In this post, we'll take things up a notch by also allowing our users to upload attachments.
 
-Sites like Indeed.com allow for job seekers to upload their resumes with the idea that employers can browse those resumes to see if a candidate is a good fit.
+Sites like Indeed.com allow job seekers to upload their resumes with the idea that employers can browse those resumes to see if a candidate is a good fit.
 
 The scope of this post will be catered to job seekers submitting resumes, but it can also be extended to account for companies as well.
 
@@ -165,7 +168,7 @@ In our application, we are choosing to store resumes in Amazon Simple Storage Se
 
 Much like the other services thus far, we'll create our S3 bucket from within the CLI.
 
-To start, we'll type the following command in out terminal:
+To start, we'll type the following command in our terminal:
 
 ```js
 amplify add storage
@@ -330,7 +333,7 @@ The last thing to do here is give our function permission to call SES.
 
 In the last section, we set up SES. Feel free to grab the ARN from that resource, or follow the steps in that post to setup SES for the first time.
 
-> 📝 If you have the AWS CLI installed, you can actually setup an email by typing the following command in your terminal and clicking the verification link sent to the provided email address:
+> 📝 If you have the AWS CLI installed, you can actually set up an email by typing the following command in your terminal and clicking the verification link sent to the provided email address:
 ```js
 aws ses verify-email-identity --email-address your-email@emai.com --region us-east-1 --profile=your-aws-profile
 ```
