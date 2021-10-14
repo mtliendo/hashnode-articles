@@ -1,5 +1,9 @@
 ## Send an SMS to Customers Using React and AWS Amplify
 
+
+%[https://youtu.be/ivmFUE_6ZKE]
+
+
 Whether it's notifying customers that their food is ready, getting school notifications, or a status update on a delivered package, SMS is a great way to get a communicate.
 
 When it comes to sending push notifications, email, or SMS, AWS has a service known as  [Amazon Simple Notification Service](https://aws.amazon.com/sns)  or SNS. In this post, we'll discuss how we can leverage SNS inside of a project built with React and  [AWS Amplify](https://docs.amplify.aws). 
