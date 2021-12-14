@@ -1,4 +1,4 @@
-## How to Have Fine-Grained Control Over Your Amplify Projects!
+## How to Enable Fine-Grained Control Over Your Amplify Projects!
 
 ## Overview
 
@@ -100,6 +100,7 @@ type Todo @model @auth(rules: [{ allow: owner }]) {
 ```
 3. Run `amplify override api` to create an `overrides.ts` file for this resource category.
 4. In this file, paste in the following code:
+
 ```ts
 import { AmplifyApiGraphQlResourceStackTemplate } from '@aws-amplify/cli-extensibility-helper'
 
