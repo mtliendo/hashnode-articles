@@ -70,7 +70,7 @@ export function override(resources: AmplifyAuthCognitoStackTemplate) {
 
 Amplify takes this a step further by adding  [directives](https://docs.amplify.aws/cli-legacy/graphql-transformer/directives/) that make working with AppSync even easier.
 
-One such directive is `@model`. Adding this to a `type` will tell Amplify to not only add a DyanamoDB table with the same name, but to prompt is the user would like to automatically have all CRUDL operations scaffolded out as well as websocket subscriptions 🤯
+One such directive is `@model`. Adding this to a `type` will tell Amplify to not only add a DyanamoDB table with the same name, but to prompt if the user would like to automatically have all CRUDL operations scaffolded out as well as websocket subscriptions 🤯
 
 When working with AppSync in Amplify, we abstract away the database so that focus is put on the data model itself. However by running the following command, you can gain access and modify it:
 
