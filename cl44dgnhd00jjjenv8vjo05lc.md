@@ -265,7 +265,7 @@ export class cdkStack extends cdk.Stack {
 				]
 			)
 		// 2. Access variables from our API when the application synths
-		const apiIdRef = cdk.Fn.ref(retVal.api.batchapi.GraphQLAPIIdOutput)
+		const apiIdRef = cdk.Fn.ref(retVal.api.batchupload.GraphQLAPIIdOutput)
 		const envRef = cdk.Fn.ref('env')
 
 		// 3. Create a function that will replace strings in a given string
@@ -309,7 +309,7 @@ export class cdkStack extends cdk.Stack {
 
     // 8. Attach the resolvers to our AppSync API
 		new appsync.CfnResolver(this, 'custom-resolver', {
-			apiId: cdk.Fn.ref(retVal.api.batchapi.GraphQLAPIIdOutput),
+			apiId: cdk.Fn.ref(retVal.api.batchupload.GraphQLAPIIdOutput),
 			fieldName: 'batchCreateProfile',
 			typeName: 'Mutation', // Query | Mutation | Subscription
 			requestMappingTemplate: injectedRequestTemplate,
