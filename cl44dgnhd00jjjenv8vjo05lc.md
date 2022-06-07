@@ -498,12 +498,19 @@ Save the application, and run the project:
 ```bash
 npm start
 ```
- On the admin page, create a user--keep in mind that this user has to be an admin, so once the user is created--for brevity sake, head into the Cognito console and move the user to the admin group.
 
-Once in the group, logout of the application by adding a `signout` prop to our AdminPage (this is provided when using the `AmplifyProvider` with `withAuthenticator`) along with a signout button
+![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1654620628910/FkOBDtHBi.png align="left")
+
+ On the admin page, create a user--keep in mind that this user has to be an admin.
+
+![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1654621225939/2VfGPR8l7.png align="left")
+
+Once the user is created--for brevity sake, head into the Cognito console and move the user to the admin group.
+
+Once in the group, logout of the application by adding a `signOut` prop to our AdminPage (this is provided when using the `AmplifyProvider` with `withAuthenticator`) along with a signOut button
 
 ```js
-<Button onClick={signout}>Signout</Button>
+<Button onClick={signOut}>Signout</Button>
 ```
 Once logged out, upload the CSV and view the output in the network tab. 
 
