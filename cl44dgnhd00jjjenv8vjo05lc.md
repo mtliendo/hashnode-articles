@@ -482,12 +482,21 @@ Lastly, in the `handleCSVSubmit` function, replace the `Papa.parse` function wit
 Papa.parse(uploadedCSV, {
 	header: true,
 	complete: async (results) => {
-		const data = results.data.map(({name,email, picture}) => ({firstName: name.first, lastName: name.last, email, images: {
-			thumbnail: picture.thumbnail,
-			medium: picture. medium,
-			large: picture.large 
-		}}))
-		await API.graphql({query: batchCreateProfile, variables: {input: data}})
+		const data = results.data.map((item) => ({
+			firstName: item['name.first'],
+			lastName: item['name.first'],
+			email: item.email,
+			images: {
+				thumbnail: item['picture.thumbnail'],
+				medium: item['picture.medium'],
+				large: item['picture.large'],
+			},
+		}))
+		console.log(data)
+		await API.graphql({
+			query: batchCreateProfile,
+			variables: { profiles: data },
+		}).catch((e) => console.log(e))
 	},
 })
 ```
@@ -513,6 +522,9 @@ Once in the group, logout of the application by adding a `signOut` prop to our A
 <Button onClick={signOut}>Signout</Button>
 ```
 Once logged out, upload the CSV and view the output in the network tab. 
+
+
+![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1654622471541/p3LL7R1Go.png align="left")
 
 Optional: view the results in DynamoDB!
 
