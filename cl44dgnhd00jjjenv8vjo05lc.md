@@ -260,7 +260,7 @@ export class cdkStack extends cdk.Stack {
 				[
 					{
 						category: 'api',
-						resourceName: 'batchapi',
+						resourceName: 'batchupload',
 					},
 				]
 			)
