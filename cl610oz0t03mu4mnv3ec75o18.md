@@ -1,4 +1,4 @@
-## The fullstack guide to creating AppSync APIs in the CDK
+## The fullstack guide to creating AppSync APIs with the AWS CDK
 
 # Overview
 
