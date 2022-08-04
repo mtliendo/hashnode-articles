@@ -84,3 +84,35 @@ Once you login, the output for your user looks like the following in CloudWatch:
 ![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1659591160168/yTUpauDjR.png align="left")
 
 delete it all: `amplify delete`
+
+If wanting to update a dynamoDB table:
+
+```js
+const AWS = require('aws-sdk')
+const docClient = new AWS.DynamoDB.DocumentClient()
+
+async function main(event) {
+	//construct the params
+	const params = {
+		TableName: process.env.TABLENAME,
+		Item: {
+			id: event.request.userAttributes.sub,
+			firstname: event.request.userAttributes.name,
+			lastname: event.request.userAttributes.family_name,
+			username: event.userName,
+			email: event.request.userAttributes.email,
+		},
+	}
+
+	//try to add to the DB, otherwise throw an error
+	try {
+		await docClient.put(params).promise()
+		return event
+	} catch (err) {
+		console.log(err)
+		return event
+	}
+}
+
+module.exports = { main }
+```
