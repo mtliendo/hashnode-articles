@@ -22,8 +22,6 @@ However, while many devs/founders consider the day 1 experience or the first 100
 
 There are lots of players and opinions in this space, but in this post, we'll discuss why embracing AWS, specifically a core selection of tools and services, can not only unlock your full-stack potential but also elevate your application development so that your customers benefit from it.
 
-**\[image: AWS logo and NextJS logo side by side, illustrating the combination of the two technologies\]**
-
 So, why should you build your next application on AWS? Here are some compelling reasons and services that you should consider:
 
 ### Slightly More Technical Overhead, But Worth It
@@ -35,8 +33,6 @@ Adopting this AWS-based stack might come with slightly more technical overhead c
 The added technical overhead will be a valuable investment in your skillset, making you a more versatile developer. As you become proficient in AWS services, you'll find that the initial learning curve pays off in the long run, helping you create more sophisticated applications and positioning you for greater opportunities in the tech industry.
 
 ### Cost-effective compared to 3rd-party low-code tools
-
-\[image: Graph comparing the cost of AWS vs. low-code tools with monthly subscriptions\]
 
 While low-code tools with monthly subscriptions may seem tempting due to how easy they are to get started, AWS offers a more cost-effective and flexible solution when making the most of serverless/managed services. With those, you only pay for the resources you consume, allowing you to optimize costs as your application scales.
 
