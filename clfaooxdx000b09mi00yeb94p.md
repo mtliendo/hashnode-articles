@@ -4,7 +4,7 @@ datePublished: Thu Mar 16 2023 05:41:56 GMT+0000 (Coordinated Universal Time)
 cuid: clfaooxdx000b09mi00yeb94p
 slug: getting-started-how-to-install-the-aws-cli-and-configure-a-cdk-typescript-project
 cover: https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/s8TQiOfGlz0/upload/d7ccf4019599058502a9148428114ed0.jpeg
-tags: fullstack, startups, aws, serverless, aws-cdk
+tags: startups, aws, full-stack, serverless, aws-cdk
 
 ---
 
@@ -18,11 +18,15 @@ In this post, we'll walk through how to get started with the CDK, starting with 
 
 ## **Prerequisites**
 
-* [Node.js](https://nodejs.org/en/) version 14.x or later is installed.
+* [Node.js](https://nodejs.org/en/) version 16 or later is installed.
     
 * [NPM](https://www.npmjs.com/) is installed.
     
 * [An AWS account](https://aws.amazon.com/console/)
+    
+* %[https://youtu.be/FAfhMXUiLuU] 
+    
+* %[https://www.youtube.com/watch?v=UnqxiSJEZAk] 
     
 
 ## **Steps**
