@@ -1,6 +1,6 @@
 ---
 title: "Unleash Your Full-Stack Potential: Why Frontend Developers Should Embrace AWS"
-datePublished: Fri Mar 17 2023 02:28:02 GMT+0000 (Coordinated Universal Time)
+datePublished: Tue Mar 14 2023 03:02:08 GMT+0000 (Coordinated Universal Time)
 cuid: clfbx7fa100070alb3ml9bch0
 slug: unleash-your-full-stack-potential-why-frontend-developers-should-embrace-aws
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1679019489512/69c9d4e4-4932-409f-8d5f-0ae924b1052c.png
