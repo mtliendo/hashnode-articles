@@ -228,7 +228,13 @@ const addUserFunc = new NodejsFunction(this, 'addUserFunc', {
 
 By defining the function here, if there is ever another service that needs to add a user to our table, we can simply pass this function as a prop and update the function's `event` type accordingly.
 
-It's worth noting that the Lambda construct has two different L2 constructs. A [generic construct](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda-readme.html) that allows for code to be written in many different languages, and [this `NodejsFunction` construct](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda_nodejs-readme.html) that only works with JavaScript and TypeScript files, but handles the bundling and transpiling with `esbuild` for us.
+It's worth noting that the Lambda construct has two different L2 constructs. A [generic construct](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda-readme.html) that allows for code to be written in many different languages, and [this `NodejsFunction` construct](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda_nodejs-readme.html) that only works with JavaScript and TypeScript files, but handles the bundling and transpiling with `esbuild` for us. Since we wrote our function in TypeScript, let's install `esbuild` as a dev dependency so that the CDK can automatically handle the transpilation process for us.
+
+In the root of our project, run the following command:
+
+```bash
+npm i -D esbuild
+```
 
 > 🗒️ A note on pricing:
 > 
