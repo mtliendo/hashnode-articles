@@ -220,12 +220,13 @@ const addUserFunc = new NodejsFunction(this, 'addUserFunc', {
 	functionName: `${context.appName}-${context.environment}-addUserFunc`,
 	runtime: Runtime.NODEJS_16_X,
 	handler: 'handler',
-	entry: path.join(__dirname, `/../src/my-lambda/main.ts`),
+	entry: path.join(__dirname, `./functions/addUser/main.ts`),
+
 })
-//...creation of db 
+//...creation of db
 ```
 
-By defining the function here, if there is ever another service that needs to add a user to our table, we can simply pass this function as a prop and update the functions `event` type accordingly.
+By defining the function here, if there is ever another service that needs to add a user to our table, we can simply pass this function as a prop and update the function's `event` type accordingly.
 
 It's worth noting that the Lambda construct has two different L2 constructs. A [generic construct](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda-readme.html) that allows for code to be written in many different languages, and [this `NodejsFunction` construct](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda_nodejs-readme.html) that only works with JavaScript and TypeScript files, but handles the bundling and transpiling with `esbuild` for us.
 
@@ -285,7 +286,7 @@ export function createUserTable(
 The one line that should grab your attention is:
 
 ```typescript
-userTable.grantWriteData(props.addUserFunc) 
+userTable.grantWriteData(props.addUserFunc)
 ```
 
 In AWS, services are deny-by-default. This means unless permissions are defined (either explicitly or implicitly), then they can't talk to one another.
@@ -296,7 +297,7 @@ In the case of our Lambda function, we need our DynamoDB table to allow the func
 > 
 > ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1679214849275/006f62d0-1109-4d7a-9581-74a56e1dbb8e.png align="center")
 > 
-> For finer grained access, there is also the `userTable.grant(props.addUserFunc, "dynamodb:PutItem")` method. Both are fine to use.
+> For finer-grained access, there is also the `userTable.grant(props.addUserFunc, "dynamodb:PutItem")` method. Both are fine to use.
 
 ## Conclusion
 
