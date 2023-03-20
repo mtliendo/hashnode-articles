@@ -3,6 +3,7 @@ title: "The AWS CDK Guide to Authentication and Authorization for Frontend Devel
 datePublished: Mon Mar 20 2023 04:58:57 GMT+0000 (Coordinated Universal Time)
 cuid: clfgcx1pq000609jq7sjxb7eq
 slug: the-aws-cdk-guide-to-authentication-and-authorization-for-frontend-developers
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1679289285892/2149a44f-75a0-4e79-b81d-f5308ad633be.png
 tags: cloud, startups, aws, frontend-development, serverless
 
 ---
