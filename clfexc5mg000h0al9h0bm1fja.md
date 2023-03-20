@@ -40,23 +40,21 @@ In particular, here's the following outline for our backend:
     
 6. **Simple Storage Service (S3) and Cloudfront**: Adding image storage
     
-7. **S3 vs Cloudinary**? Better together.
+7. **AWS AppSync**: Modern API Development
     
-8. **AWS AppSync**: Modern API Development
-    
-9. **Deploying to AWS**: CDK context and GitHub actions
+8. **Deploying to AWS**: CDK context and GitHub actions
     
 
 Also, because this is a fullstack series, we'll bring our infrastructure to life on the frontend:
 
-1. **Frontend setup** NextJS, TailwindCSS, and Next-Cloudinary
+1. **Frontend setup** NextJS, [TailwindCSS](https://tailwindcss.com/), and [Cloudinary](https://cloudinary.com/)(!)
     
-2. **Frontend to backend** with AWS Amplify libraries
+2. **Frontend to backend** with [AWS Amplify libraries](https://docs.amplify.aws/)
     
-3. **AWS Amplify Hosting**: Considerations and walkthrough
+3. [**AWS Amplify Hosting**](https://aws.amazon.com/amplify/): Considerations and walkthrough
     
 
-**\[Bonus\]**: Fullstack SaaS starter with Stripe
+**\[Bonus\]**: Fullstack SaaS starter with [Stripe](https://stripe.com/)
 
 With an understanding of what services we'll be making use of, let's get started building our project!
 
