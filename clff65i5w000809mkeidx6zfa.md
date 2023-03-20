@@ -3,7 +3,7 @@ title: "AWS CDK for Frontend Developers: Databases and Serverless Functions"
 datePublished: Sun Mar 19 2023 09:01:48 GMT+0000 (Coordinated Universal Time)
 cuid: clff65i5w000809mkeidx6zfa
 slug: aws-cdk-for-frontend-developers-databases-and-serverless-functions
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1679216375359/9f157ecd-56e7-410b-ba06-6d8038e9e2ca.png
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1679289919996/8677cf10-7a99-4daf-850a-aa59505b8a82.png
 tags: startups, aws, full-stack, frontend-development, serverless
 
 ---
