@@ -156,7 +156,7 @@ npm i @aws-cdk/aws-cognito-identitypool-alpha
 
 ## Updating our stack with Cognito
 
-As was the same in previous chapters, we'll invoke our `createTravelUserpool` function by passing in both the `namingPrefix` and the `addUserPostConfirmation` props. This should be done just beneath the Lambda function we created in the previous chapter, but before our database (no reason in particular, I just like to keep related services together).
+As was the same in previous chapters, we'll invoke our `createTravelUserpool` function by passing in the `appName` , `env`and the `addUserPostConfirmation` props. This should be done just beneath the Lambda function we created in the previous chapter, but before our database (no reason in particular, I just like to keep related services together).
 
 ```typescript
 // created in previous chapter
@@ -169,7 +169,8 @@ const addUserFunc = new NodejsFunction(this, 'addUserFunc', {
 
 // import this function and call it with the appropriate props
 const cognitoAuth = createTravelUserpool(this, {
-	namingPrefix: `${context.appName}-${context.environment}`,
+    appName: context.appName,
+	env: context.environment,
 	addUserPostConfirmation: addUserFunc,
 })
 
