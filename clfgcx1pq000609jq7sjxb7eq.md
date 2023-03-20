@@ -165,7 +165,7 @@ const addUserFunc = new NodejsFunction(this, 'addUserFunc', {
 	functionName: `${context.appName}-${context.environment}-addUserFunc`,
 	runtime: Runtime.NODEJS_16_X,
 	handler: 'handler',
-	entry: path.join(__dirname, `/../src/my-lambda/main.ts`),
+    entry: path.join(__dirname, `./functions/addUser/main.ts`)
 })
 
 // import this function and call it with the appropriate props
