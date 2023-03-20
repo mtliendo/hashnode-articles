@@ -19,7 +19,7 @@ Let's discuss each of those to see what they provide.
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1679203048053/8ddfd4fb-4411-4b8d-b23c-f15f3c50d471.png?auto=compress,format&format=webp align="left")
 
-### Authentication
+## Authentication
 
 Frontend developers use authentication to provide credentials that identify who they are. This is often done by providing an email and password, or by signing in with a social provider. Popular solutions like Auth0 and Auth.js are commonly used in the frontend/indie hacker community for their ease of use and developer experience.
 
@@ -83,7 +83,6 @@ At this point in the series, I'll skip over the types and the function and inste
     
 * `standardAttributes`: An object that specifies the standard attributes for the user pool. In this case, only the `email` attribute is set with `required` and `mutable` properties.
     
-
 * `required`: When set to `true`, then the `email` attribute is required, and users must provide a value for this attribute during sign-up.
     
 * `mutable`: Determines whether the `email` attribute can be updated by the user.
@@ -104,7 +103,7 @@ const userPoolClient = new awsCognito.UserPoolClient(
 return {userpool, userPoolClient}
 ```
 
-### Authorization
+## Authorization
 
 If authentication is a bouncer at a nightclub that checks your ID before getting in, then authorization is the V.I.P. access lounge that only certain people can get into.
 
@@ -185,7 +184,7 @@ const cognitoAuth = createTravelUserpool(this, {
 > 
 > ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1679286364401/a7b40bcd-eaff-4277-a440-a794b02a2337.png align="center")
 
-### Conclusion
+## Conclusion
 
 In this post, we talked about authentication and authorization as they relate to both Amazon Cognito, and our Trip Logger application. Additionally, we added our Lambda function as a `postConfirmation` trigger. This enables us to display profile information to our users in a way where it can be updated without them having to log in and out.
 
