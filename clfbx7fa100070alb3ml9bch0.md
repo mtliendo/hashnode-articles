@@ -110,10 +110,6 @@ As a frontend developer, you're probably familiar with the benefits of GraphQL, 
 
 AWS AppSync is a fully managed GraphQL service. You supply it with a schema, give it data sources, and tell it how to connect to the data sources. As more requests come in, the service scales appropriately. If you've ever had [Taco Bell delivered to you](https://aws.amazon.com/solutions/case-studies/taco-bell/), [watched a show on HBO Max](https://aws.amazon.com/blogs/media/watch-now-hbo-max-uses-canaries-on-aws-for-outside-in-validation/), [saw stats on a live Ferrari F1 race](https://www.youtube.com/watch?v=1qYBEcG-fV4&t=1s), or [purchased a ticket from Ticketmaster](https://twitter.com/AWSstartups/status/1040844414627864576), then you've already interacted with AppSync.
 
-> As a managed GraphQL service, there isn't a GrapQL server to set up. Also, AppSync doesn't have its own client library and instead integrates with clients as part of the Amplify libraries package. This makes it hard to evaluate when compared to other GraphQL offerings.
-> 
-> However, if interested in a comparison, check out the [State of GraphQL survey](https://2022.stateofgraphql.com/en-US/).
-
 To resolve the data, you write JavaScript (native TypeScript support coming soon). Note that this isn't in a server, or even a serverless function like Lambda, this is a mapping that tells AppSync how to fetch the data. For example, the following is how a user would grab an item from DynamoDB:
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1679014855591/007ba567-2808-4c6d-8bd6-5236569ed62d.png align="center")
