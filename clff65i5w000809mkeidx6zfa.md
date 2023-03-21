@@ -136,114 +136,6 @@ All constructs are created with the `new` command and typically expect a format 
 > 
 > ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1679207129333/12411e78-192c-48e4-968c-ed12b755ba30.png align="center")
 
-### Creating our Lambda Function
-
-Our User table will be populated by a Lambda function. A Lambda function is often referred to as a "serverless function" when not referring to just AWS, I'll say Lambda function throughout this series, but just to get us on the same page, for this section I'll say serverless function.
-
-As a frontend/fullstack developer, you may have an idea of what a serverless function is--and for the most part, you're probably correct, but there are some important pieces I want to make sure we understand, specifically the following:
-
-1. **A serverless function executes a bit of code, and then it stops.** As opposed to a server (which can be eternally running), a serverless function is *ephemeral*. It spins up its own environment and when it's done executing and requests have stopped coming in, it'll eventually delete itself.
-    
-2. **A serverless function takes in an event argument. This is contextual.** Just like in JavaScript anything can call a function, the same is true for a serverless function. Because of that, the `event` object that every function receives will vary based on what is invoking it.
-    
-3. **A serverless function is not an API route** **but a component of one.** An API route is made up of a gateway (the thing that receives the HTTP request), and the function to invoke (the serverless function). This is important because we often think functions can only be invoked as part of a network request, but again, it can be from just about anything.
-    
-
----
-
-To emphasize that last point about anything being able to call a Lambda function, our function will be triggered everytime a user signs up for our application. While the application will only have one user (you), the same function applies.
-
-However, it's important to remember that multiple services may end up calling our function over time. For that reason, it makes sense to define them in one directory, and then attach them to the services that need them.
-
-To showcase that idea, create a new file called `lib/functions/addUser/main.ts` and paste in the following:
-
-```typescript
-import * as AWS from 'aws-sdk'
-const docClient = new AWS.DynamoDB.DocumentClient()
-import { PostConfirmationConfirmSignUpTriggerEvent } from 'aws-lambda'
-
-exports.handler = async (event: PostConfirmationConfirmSignUpTriggerEvent) => {
-	const date = new Date()
-	const isoDate = date.toISOString()
-
-	//construct the param
-	const params = {
-		TableName: process.env.API_HELLO_USERTABLE_NAME as string,
-		Item: {
-			__typename: 'User',
-			id: event.request.userAttributes.sub,
-			createdAt: isoDate, // ex) 2023-02-16T16:07:14.189Z
-			updatedAt: isoDate,
-			username: event.userName,
-			email: event.request.userAttributes.email,
-		},
-	}
-
-	//try to add to the DB, otherwise throw an error
-	try {
-		await docClient.put(params).promise()
-		return event
-	} catch (err) {
-		console.log(err)
-		return event
-	}
-}
-```
-
-> 🗒️ The `PostConfirmationConfirmSignUpTriggerEvent` type is the event that our authentication service will send to us. More on that in the next chapter.
-
-You should be getting TypeScript errors relating to the `aws-sdk` and the `aws-lambda` packages. To fix those, it's important to know two things:
-
-1. The AWS SDK is automatically installed in Lambda functions running in AWS. This means when we install it, we only have to install it as a dev dependency.
-    
-2. Recall Lambda functions are ephemeral and have their own environment. So when we install dependencies for them, they live in their own `package.json` file.
-    
-
-From your terminal, change into the `lib/functions/addUser` directory and run the following commands and the errors should disappear:
-
-```bash
-npm init -y && npm i -D aws-sdk @types/aws-lambda
-```
-
-While the function itself will be used by our authentication service, we can create the function by calling the `NodejsFunction` L2 construct.
-
-In the `lib/backend-trip-post-stack.ts` file, paste in the following as the first call under `super(scope, id, props)`:
-
-```typescript
-//..other imports
-import { createTravelTable, createUserTable } from './databases/tables'
-import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs'
-import path = require('path')
-import { Runtime } from 'aws-cdk-lib/aws-lambda'
-
-const addUserFunc = new NodejsFunction(this, 'addUserFunc', {
-	functionName: `${context.appName}-${context.environment}-addUserFunc`,
-	runtime: Runtime.NODEJS_16_X,
-	handler: 'handler',
-	entry: path.join(__dirname, `./functions/addUser/main.ts`),
-
-})
-//...creation of db
-```
-
-By defining the function here, if there is ever another service that needs to add a user to our table, we can simply pass this function as a prop and update the function's `event` type accordingly.
-
-It's worth noting that the Lambda construct has two different L2 constructs. A [generic construct](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda-readme.html) that allows for code to be written in many different languages, and [this `NodejsFunction` construct](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda_nodejs-readme.html) that only works with JavaScript and TypeScript files, but handles the bundling and transpiling with `esbuild` for us. Since we wrote our function in TypeScript, let's install `esbuild` as a dev dependency so that the CDK can automatically handle the transpilation process for us.
-
-In the root of our project, run the following command:
-
-```bash
-npm i -D esbuild
-```
-
-> 🗒️ A note on pricing:
-> 
-> Per the [AWS pricing page for Lambda](https://aws.amazon.com/lambda/pricing/), "The AWS Lambda free tier includes one million free requests per month and 400,000 GB-seconds of compute time per month"
-> 
-> While the pricing can be a bit confusing due to it being based on both requests and processing time, the gist is that this is a free service for our needs and it cost fractions of a penny for many applications.
-> 
-> Feel free to checkout the pricing examples in the docs to get a more concrete example.
-
 ### Creating the User Table
 
 As for the parts we've already familiar with, let's add those in.
@@ -268,9 +160,7 @@ Here we're calling a `createUserTable` function and in addition to our `context`
 In the `lib/databases/tables.ts` file, we'll create the `createUserTable` which will look similar to what we created earlier. To do so, paste in the following:
 
 ```typescript
-type CreateUserTableProps = BaseTableProps & {
-	addUserFunc: NodejsFunction
-}
+type CreateUserTableProps = BaseTableProps & {}
 export function createUserTable(
 	scope: Construct,
 	props: CreateUserTableProps
@@ -283,27 +173,176 @@ export function createUserTable(
 		partitionKey: { name: 'id', type: awsDynamodb.AttributeType.STRING },
 	})
 
-	userTable.grantWriteData(props.addUserFunc)
-
 	return userTable
 }
 ```
 
-The one line that should grab your attention is:
+### Creating our Lambda Function
+
+#### What is a Lambda function
+
+Our User table will be populated by a Lambda function. A Lambda function is often referred to as a "serverless function" when not referring to just AWS, I'll say Lambda function throughout this series, but just to get us on the same page, for this section I'll say serverless function.
+
+As a frontend/fullstack developer, you may have an idea of what a serverless function is--and for the most part, you're probably correct, but there are some important pieces I want to make sure we understand, specifically the following:
+
+1. **A serverless function executes a bit of code, and then it stops.** As opposed to a server (which can be eternally running), a serverless function is *ephemeral*. It spins up its own environment and when it's done executing and requests have stopped coming in, it'll eventually delete itself.
+    
+2. **A serverless function takes in an event argument. This is contextual.** Just like in JavaScript anything can call a function, the same is true for a serverless function. Because of that, the `event` object that every function receives will vary based on what is invoking it.
+    
+3. **A serverless function is not an API route** **but a component of one.** An API route is made up of a gateway (the thing that receives the HTTP request), and the function to invoke (the serverless function). This is important because we often think functions can only be invoked as part of a network request, but again, it can be from just about anything.
+    
+
+---
+
+To emphasize that last point about anything being able to call a Lambda function, our function will be triggered every time a user signs up for our application.
+
+#### Defining the Lambda function
+
+A Lambda function definition is referred to as its *handler.*
+
+To define a handler for our Lambda function, create a new file called `lib/functions/addUserPostConfirmation/main.ts` and paste in the following:
 
 ```typescript
-userTable.grantWriteData(props.addUserFunc)
+import * as AWS from 'aws-sdk'
+const docClient = new AWS.DynamoDB.DocumentClient()
+//typeScript types so that our "event" object is defined
+import { PostConfirmationConfirmSignUpTriggerEvent } from 'aws-lambda'
+
+exports.handler = async (event: PostConfirmationConfirmSignUpTriggerEvent) => {
+	const date = new Date()
+	const isoDate = date.toISOString()
+
+	//construct the param
+	const params = {
+		TableName: process.env.USER_TABLE_NAME as string,
+		Item: {
+			__typename: 'User',
+			id: event.request.userAttributes.sub,
+			createdAt: isoDate, // ex) 2023-02-16T16:07:14.189Z
+			updatedAt: isoDate,
+			username: event.userName,
+			email: event.request.userAttributes.email,
+		},
+	}
+
+	//try to add to the DB, otherwise throw an error
+	try {
+		await docClient.put(params).promise()
+		return event
+	} catch (err) {
+		console.log(err)
+		return event
+	}
 ```
 
-In AWS, services are deny-by-default. This means unless permissions are defined (either explicitly or implicitly), then they can't talk to one another.
+The AWS SDK gives us a utility for adding data to a table via JSON with a `DocumentClient`. From there, we construct or params. These exact reason for adding these items will be revealed in out API chapter, but for now, it's enough to know this object is what is going to be added to our database.
 
-In the case of our Lambda function, we need our DynamoDB table to allow the function to add user data to it. We'll create our own access policies when we talk about S3, but for now, we, fortunately, get to take advantage of a handy utility: `grantWriteData` that will create the access policy for us--all we have to do is pass in the service we want to grant access to.
+You should be getting TypeScript errors relating to the `aws-sdk` and the `aws-lambda` packages. To fix those, it's important to know two things:
 
-> 🗒️ While handy, it's important to note the `grantWriteData` function is technically over-permissioned. Intellisense shows the access rights we're permitting.
+1. The AWS SDK is automatically installed in Lambda functions running in AWS. This means when we install it, we only have to install it as a dev dependency.
+    
+2. Recall Lambda functions are ephemeral and have their own environment. So when we install dependencies for them, they live in their own `package.json` file.
+    
+
+From your terminal, change into the `lib/functions/addUserPostConfirmation` directory and run the following commands and the errors should disappear:
+
+```bash
+npm init -y && npm i -D aws-sdk @types/aws-lambda
+```
+
+While the function itself will be used by our authentication service, we can create the function by calling the `NodejsFunction` L2 construct.
+
+In the same the `addUserPostConfirmation` directory, create a file called `construct.ts` and paste in the following:
+
+```typescript
+import { Table } from 'aws-cdk-lib/aws-dynamodb'
+import { Runtime } from 'aws-cdk-lib/aws-lambda'
+import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs'
+import { Construct } from 'constructs'
+import * as iam from 'aws-cdk-lib/aws-iam'
+import path = require('path')
+import { envNameContext } from '../../../cdk.context'
+
+type CreateAddUserPostConfirmationProps = {
+	appName: string
+	env: envNameContext
+	userTable: Table // 👈 Our function expects a DynamoDB table
+}
+
+export const createAddUserPostConfirmation = (
+	scope: Construct,
+	props: CreateAddUserPostConfirmationProps
+) => {
+	const addUserFunc = new NodejsFunction(scope, 'addUserFunc', {
+		functionName: `${props.appName}-${props.env}-addUserFunc`,
+		runtime: Runtime.NODEJS_16_X,
+		handler: 'handler',
+		entry: path.join(__dirname, `./main.ts`),
+		environment: {
+// pass the DynamoDB table name to the function as an env var
+			USER_TABLE_NAME: props.userTable.tableName,
+		},
+	})
+
+// Give our function permission to add an item to DynamoDB
+	addUserFunc.addToRolePolicy(
+		new iam.PolicyStatement({
+			effect: iam.Effect.ALLOW,
+			actions: ['dynamodb:PutItem'],
+			resources: [props.userTable.tableArn],
+		})
+	)
+	return addUserFunc
+}
+```
+
+When using L2 constructs, they all follow a similar pattern. So even though this is a completely different AWS service, it can be distilled down to the same signature as our previous DynamoDB tables:
+
+```typescript
+new ConstructName(scope, id, configObject)
+```
+
+> In AWS, services are deny-by-default. This means unless permissions are defined (either explicitly or implicitly), then they can't talk to one another.
 > 
-> ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1679214849275/006f62d0-1109-4d7a-9581-74a56e1dbb8e.png align="center")
+> In the next chapter, we'll dive deeper into this concept and create our own access policies when we talk about S3.
+
+  
+It's worth noting that constructing a Lambda function with the CDK comes in two flavors:
+
+1. A [generic construct](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda-readme.html) that allows for code to be written in many different languages
+    
+2. `A`[`NodejsFunction` construct](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda_nodejs-readme.html) that only works with JavaScript and TypeScript files, but handles the bundling and transpiling with `esbuild` for us.
+    
+    Since we wrote our function in TypeScript, let's install `esbuild` as a dev dependency so that the CDK can automatically handle the transpilation process for us.
+    
+
+In the root of our project, run the following command:
+
+```bash
+npm i -D esbuild
+```
+
+We defined our function handler, and create the construct. All that's left to do is add the function to our stack.
+
+Back in our `lib/backend-trip-post-stack.ts` file, paste in the following:
+
+```typescript
+const addUserFunc = createAddUserPostConfirmation(this, {
+	appName: context.appName,
+	env: context.environment,
+	userTable: userDB
+})
+```
+
+Congratulations! You've just learned how to create 2 databases and a Lambda function in the CDK. Furthermore, our Lambda function has environment variables and permission to talk to a database.
+
+> 🗒️ A note on pricing:
 > 
-> For finer-grained access, there is also the `userTable.grant(props.addUserFunc, "dynamodb:PutItem")` method. Both are fine to use.
+> Per the [AWS pricing page for Lambda](https://aws.amazon.com/lambda/pricing/), "The AWS Lambda free tier includes one million free requests per month and 400,000 GB-seconds of compute time per month"
+> 
+> While the pricing can be a bit confusing due to it being based on both requests and processing time, the gist is that this is a free service for our needs and it cost fractions of a penny for many applications.
+> 
+> Feel free to checkout the pricing examples in the docs to get a more concrete example.
 
 ## Conclusion
 
