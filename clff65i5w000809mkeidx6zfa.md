@@ -38,7 +38,7 @@ import { CDKContext } from './../cdk.context.d'
 import * as cdk from 'aws-cdk-lib'
 import { Construct } from 'constructs'
 // 👇 this is new
-import {createTravelTable} from './database/tables.ts'
+import {createTravelTable} from './database/tables'
 
 export class BackendTripPostStack extends cdk.Stack {
 	constructor(
@@ -144,7 +144,7 @@ While still in the `lib/backend-trip-post-stack.ts` file, import a `createUserTa
 
 ```typescript
 //...rest of imports
-import { createTravelTable, createUserTable } from './databases/tables.ts'
+import { createTravelTable, createUserTable } from './databases/tables'
 
 //...rest of code
 //userDB
