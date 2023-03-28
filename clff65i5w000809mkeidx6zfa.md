@@ -144,7 +144,7 @@ While still in the `lib/backend-trip-post-stack.ts` file, import a `createUserTa
 
 ```typescript
 //...rest of imports
-import { createTravelTable, createUserTable } from './databases/tables'
+import { createTravelTable, createUserTable } from './databases/tables.ts'
 
 //...rest of code
 //userDB
@@ -306,7 +306,6 @@ new ConstructName(scope, id, configObject)
 > 
 > In the next chapter, we'll dive deeper into this concept and create our own access policies when we talk about S3.
 
-  
 It's worth noting that constructing a Lambda function with the CDK comes in two flavors:
 
 1. A [generic construct](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda-readme.html) that allows for code to be written in many different languages
