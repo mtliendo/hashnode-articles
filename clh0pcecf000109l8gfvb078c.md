@@ -306,7 +306,7 @@ export default App
 
 I did this live for AWS Developer Innovation Day and in the span of 3ish minutes, I handled over 5500 subscription requests!
 
-%[https://www.youtube.com/live/uNOSzBP40i0?feature=share&t=5923] 
+%[https://www.youtube.com/live/uNOSzBP40i0?feature=share&t=6588] 
 
 It helps if you create a QR Code for your audience and add that to one of your slides (don't forget to re-export to HTML and add the assets folder to your project again). Currently, I run the slides in fullscreen on localhost and that seems to work fine for me.
 
