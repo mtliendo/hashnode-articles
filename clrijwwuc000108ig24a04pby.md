@@ -24,7 +24,7 @@ So I came up with a solution where someone could purchase a ticket online and ha
 
 This post will focus on the ticket generation aspect!
 
-> If wanting to skip to trying this out on your own, I have an [entire repo](https://github.com/mtliendo/ticketer) that you can use. Follow the readme to get started and begin making your own tickets!
+> If wanting to skip to trying this out on your own, I have an [entire repo](https://github.com/focusOtter/ticketer-generator) that you can use. Follow the readme to get started and begin making your own tickets!
 
 ## Choosing a ticket template
 
