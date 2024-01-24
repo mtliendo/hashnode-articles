@@ -15,6 +15,10 @@ In another use case, I want to create an AI-generated bedtime story for my kids.
 
 Both of those scenarios are examples where you'd want to call AppSync from a Lambda function and what the focus of this post is about.
 
+> 📹 This post now has a full video guide!
+> 
+> %[https://youtu.be/-qogqNXlDKM] 
+
 %[https://github.com/focusOtter/lambda-invoke-appsync] 
 
 > 🗒️ I provided a repo above incase you want to get straight to the good bits!
