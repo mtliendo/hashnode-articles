@@ -14,6 +14,10 @@ Amazon Simple Storage Solution (Amazon S3) is one of the oldest AWS services. It
 
 In this post, I'll show you how to securely combine a NextJS frontend with an AWS CDK backend. By the end of this post, I hope you see that the parts that I found scary, are nothing more than simple access patterns.
 
+> This post now has a YouTube video with it that shows a full project walkthrough!
+
+%[https://youtu.be/ueeYD6AqUXo] 
+
 ## Project Setup
 
 Like a medium-rare steak and a good cabernet, this post is best paired with a GitHub repo 👇🏽
