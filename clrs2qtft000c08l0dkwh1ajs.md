@@ -55,7 +55,7 @@ Note that aside from some props being passed in, the core is essentially giving 
 
 ## How to allow Lambda to Sign with SigV4
 
-[This file sucks.](https://github.com/focusOtter/lambda-invoke-appsync/blob/main/lib/functions/invokeAppSyncFunc/appsyncAuthUtil.ts) I wish it were easier. The good news is that you never have to modify it. There are some NPM packages out there that allow you to install it, but it's simple enough to just paste in a project.
+[This file sucks.](https://github.com/focusOtter/lambda-invoke-appsync/blob/main/lib/functions/invokeAppSyncFunc/appsyncAuthUtil.ts) I wish it were easier [(now it is!)](https://blog.focusotter.com/how-aws-appsync-and-amazon-eventbridge-unlock-real-time-data-across-domains). The good news is that you never have to modify it. There are some NPM packages out there that allow you to install it, but it's simple enough to just paste in a project.
 
 Let's break it down:
 
